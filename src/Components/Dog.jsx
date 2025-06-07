@@ -4,7 +4,6 @@ import DogImage from "./DogImage";
 import Header from "./Header";
 import Footer from "./Footer";
 
-
 function Dog() {
   const [imgLinks, setImgLinks] = useState([]);
   const [breeds, setBreeds] = useState([]);
@@ -26,6 +25,11 @@ function Dog() {
         setError("Failed to fetch breeds");
       });
   };
+
+  const addBreed = (newBreed) => {
+    setBreeds((prevBreeds) => [...prevBreeds, newBreed]);
+  };
+
   const getRandomDog = () => {
     fetch('https://dog.ceo/api/breeds/image/random')
       .then((response) => response.json())
@@ -42,7 +46,7 @@ function Dog() {
         setError('Failed to fetch image');
       });
   };
-  
+
   const getDogs = () => {
     if (selectedBreed !== "") {
       fetch(`https://dog.ceo/api/breed/${selectedBreed}/images/random`)
@@ -65,6 +69,7 @@ function Dog() {
       getRandomDog();
     }
   };
+
   useEffect(() => {
     getBreeds();
     getRandomDog();
@@ -80,6 +85,7 @@ function Dog() {
         selectedBreed={selectedBreed}
         setSelectedBreed={setSelectedBreed}
         getDogs={getDogs}
+        addBreed={addBreed}
       />
       <Footer />
     </div>
